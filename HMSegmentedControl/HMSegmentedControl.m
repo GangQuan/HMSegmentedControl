@@ -296,7 +296,6 @@
     self.selectionIndicatorArrowLayer.backgroundColor = self.selectionIndicatorColor.CGColor;
     
     self.selectionIndicatorStripLayer.backgroundColor = self.selectionIndicatorColor.CGColor;
-    
     self.selectionIndicatorBoxLayer.backgroundColor = self.selectionIndicatorBoxColor.CGColor;
     self.selectionIndicatorBoxLayer.borderColor = self.selectionIndicatorBoxColor.CGColor;
     
@@ -601,6 +600,7 @@
         } else {
             if (!self.selectionIndicatorStripLayer.superlayer) {
                 self.selectionIndicatorStripLayer.frame = [self frameForSelectionIndicator];
+                self.selectionIndicatorStripLayer.cornerRadius = self.selectionIndicatorStripLayer.frame.size.height/2.0;
                 [self.scrollView.layer addSublayer:self.selectionIndicatorStripLayer];
                 
                 if (self.selectionStyle == HMSegmentedControlSelectionStyleBox && !self.selectionIndicatorBoxLayer.superlayer) {
@@ -647,7 +647,6 @@
 
 - (void)setArrowFrame {
     self.selectionIndicatorArrowLayer.frame = [self frameForSelectionIndicator];
-    
     self.selectionIndicatorArrowLayer.mask = nil;
     
     UIBezierPath *arrowPath = [UIBezierPath bezierPath];
@@ -720,7 +719,8 @@
             CGFloat widthToStartOfSelectedIndex = (self.segmentWidth * self.selectedSegmentIndex);
             
             CGFloat x = ((widthToEndOfSelectedSegment - widthToStartOfSelectedIndex) / 2) + (widthToStartOfSelectedIndex - sectionWidth / 2);
-            return CGRectMake(x + self.selectionIndicatorEdgeInsets.left, indicatorYOffset, sectionWidth - self.selectionIndicatorEdgeInsets.right, self.selectionIndicatorHeight);
+            CGFloat width = sectionWidth - self.selectionIndicatorEdgeInsets.right;
+            return CGRectMake(x + self.selectionIndicatorEdgeInsets.left + (width-18)/2.0, indicatorYOffset, 18, self.selectionIndicatorHeight);
         } else {
             if (self.segmentWidthStyle == HMSegmentedControlSegmentWidthStyleDynamic) {
                 CGFloat selectedSegmentOffset = 0.0f;
